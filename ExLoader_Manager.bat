@@ -45,56 +45,20 @@ cls
 echo Executando bypass...
 echo.
 
-:: Backup dos arquivos antes de limpar
-echo Criando backup dos arquivos...
-
-:: Backup de logs
-if exist "%USERPROFILE%\AppData\Roaming\ExLoader\logs\*.log" (
-    xcopy /y "%USERPROFILE%\AppData\Roaming\ExLoader\logs\*.log" "%TEMP%\ExLoader_Backup\logs\" 2>nul
-)
-
-if exist "%USERPROFILE%\AppData\Local\ExLoader\*.log" (
-    xcopy /y "%USERPROFILE%\AppData\Local\ExLoader\*.log" "%TEMP%\ExLoader_Backup\local_logs\" 2>nul
-)
-
-:: Backup de configurações
-if exist "%USERPROFILE%\AppData\Roaming\ExLoader\config\*" (
-    xcopy /y /e /i "%USERPROFILE%\AppData\Roaming\ExLoader\config\*" "%TEMP%\ExLoader_Backup\config\" 2>nul
-)
-
-:: Backup de pastas adicionais
+echo Criando backup da pasta Luno...
 if exist "C:\Luno\*" (
     xcopy /y /e /i "C:\Luno\*" "%TEMP%\ExLoader_Backup\Luno\" 2>nul
 )
 
-if exist "%USERPROFILE%\AppData\Roaming\ExHack\*" (
-    xcopy /y /e /i "%USERPROFILE%\AppData\Roaming\ExHack\*" "%TEMP%\ExLoader_Backup\ExHack\" 2>nul
-)
-
-if exist "C:\en1gma-tech\*" (
-    xcopy /y /e /i "C:\en1gma-tech\*" "%TEMP%\ExLoader_Backup\en1gma-tech\" 2>nul
-)
-
-if exist "C:\SharkHack\*" (
-    xcopy /y /e /i "C:\SharkHack\*" "%TEMP%\ExLoader_Backup\SharkHack\" 2>nul
-)
-
-:: Limpar logs de execução
-echo Limpando logs de execução...
-del /f /q "%USERPROFILE%\AppData\Roaming\ExLoader\logs\*.log" 2>nul
-del /f /q "%USERPROFILE%\AppData\Local\ExLoader\*.log" 2>nul
-
-:: Remover pasta de configuração específica
-echo Removendo configurações...
-rmdir /s /q "%USERPROFILE%\AppData\Roaming\ExLoader\config" 2>nul
-
-:: Remover pastas adicionais
-echo Removendo pastas adicionais...
+echo Removendo pasta Luno...
 rmdir /s /q "C:\Luno" 2>nul
-rmdir /s /q "%USERPROFILE%\AppData\Roaming\ExHack" 2>nul
-rmdir /s /q "C:\en1gma-tech" 2>nul
-rmdir /s /q "C:\SharkHack" 2>nul
 
+echo Apagando logs do ExLoader...
+del /f /q "D:\exloader\*.log" 2>nul
+
+echo Apagando logs da pasta ExHack...
+del /f /q "C:\Users\berna\AppData\Roaming\ExHack\*.log" 2>nul
+rmdir /s /q "C:\Users\berna\AppData\Roaming\ExHack" 2>nul
 echo.
 echo Bypass concluído com sucesso!
 echo.
@@ -108,48 +72,50 @@ if errorlevel 1 goto menu
 
 :restaurar
 cls
-echo Restaurando arquivos do backup...
+echo ===================================
+echo      Restauração de Arquivos
+echo ===================================
+echo.
+echo 1 - Restaurar do backup local
+echo 2 - Baixar e restaurar pasta Luno online
+echo 3 - Voltar ao menu
+echo.
+echo ===================================
 echo.
 
-:: Restaurar logs
-if exist "%TEMP%\ExLoader_Backup\logs\*" (
-    echo Restaurando logs...
-    xcopy /y /e /i "%TEMP%\ExLoader_Backup\logs\*" "%USERPROFILE%\AppData\Roaming\ExLoader\logs\" 2>nul
-)
+choice /c 123 /n /m "Escolha uma opção (1-3): "
 
-if exist "%TEMP%\ExLoader_Backup\local_logs\*" (
-    xcopy /y /e /i "%TEMP%\ExLoader_Backup\local_logs\*" "%USERPROFILE%\AppData\Local\ExLoader\" 2>nul
-)
+if errorlevel 3 goto menu
+if errorlevel 2 goto restaurar_online
+if errorlevel 1 goto restaurar_local
 
-:: Restaurar configurações
-if exist "%TEMP%\ExLoader_Backup\config\*" (
-    echo Restaurando configurações...
-    xcopy /y /e /i "%TEMP%\ExLoader_Backup\config\*" "%USERPROFILE%\AppData\Roaming\ExLoader\config\" 2>nul
-)
-
-:: Restaurar pastas adicionais
+:restaurar_local
+cls
+echo Restaurando pasta Luno do backup local...
+echo.
 if exist "%TEMP%\ExLoader_Backup\Luno\*" (
-    echo Restaurando pasta Luno...
     xcopy /y /e /i "%TEMP%\ExLoader_Backup\Luno\*" "C:\Luno\" 2>nul
 )
-
-if exist "%TEMP%\ExLoader_Backup\ExHack\*" (
-    echo Restaurando pasta ExHack...
-    xcopy /y /e /i "%TEMP%\ExLoader_Backup\ExHack\*" "%USERPROFILE%\AppData\Roaming\ExHack\" 2>nul
-)
-
-if exist "%TEMP%\ExLoader_Backup\en1gma-tech\*" (
-    echo Restaurando pasta en1gma-tech...
-    xcopy /y /e /i "%TEMP%\ExLoader_Backup\en1gma-tech\*" "C:\en1gma-tech\" 2>nul
-)
-
-if exist "%TEMP%\ExLoader_Backup\SharkHack\*" (
-    echo Restaurando pasta SharkHack...
-    xcopy /y /e /i "%TEMP%\ExLoader_Backup\SharkHack\*" "C:\SharkHack\" 2>nul
-)
-
 echo.
-echo Restauração concluída com sucesso!
+echo Restauração local concluída com sucesso!
+echo.
+echo Pressione qualquer tecla para voltar ao menu...
+pause > nul
+goto menu
+
+:restaurar_online
+cls
+echo Baixando e restaurando pasta Luno online...
+echo.
+set "URL_LUNO=https://github.com/seu-usuario/ExLoader-Files/raw/main/Luno.zip"
+if not exist "%TEMP%\ExLoader_Downloads\" mkdir "%TEMP%\ExLoader_Downloads\"
+powershell -Command "& {Invoke-WebRequest -Uri '%URL_LUNO%' -OutFile '%TEMP%\ExLoader_Downloads\Luno.zip'}"
+echo Extraindo pasta Luno...
+powershell -Command "& {Expand-Archive -Path '%TEMP%\ExLoader_Downloads\Luno.zip' -DestinationPath 'C:\Luno\' -Force}"
+echo Limpando arquivos temporários...
+del /f /q "%TEMP%\ExLoader_Downloads\Luno.zip" 2>nul
+echo.
+echo Restauração online concluída com sucesso!
 echo.
 echo Pressione qualquer tecla para voltar ao menu...
 pause > nul

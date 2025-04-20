@@ -6,7 +6,7 @@ O ExLoader Manager é uma ferramenta para gerenciar o ExLoader, permitindo abrir
 ## Funcionalidades
 - Abrir o ExLoader diretamente
 - Realizar bypass (limpar logs e configurações)
-- Restaurar arquivos previamente apagados
+- Restaurar arquivos previamente apagados (localmente ou via download online)
 - Autodestruição do script após uso
 
 ## Como Hospedar
@@ -41,12 +41,16 @@ Para hospedar o ExLoader Manager e seus arquivos, você pode usar uma das seguin
    - Opção 1: Abre o ExLoader
    - Opção 2: Realiza o bypass (limpa logs e configurações)
    - Opção 3: Restaura arquivos previamente apagados
+     - Opção 3.1: Restaura do backup local
+     - Opção 3.2: Baixa e restaura arquivos online
    - Opção 4: Sai do programa
 
 ## Observações
 
 - Ao realizar o bypass, todos os arquivos são automaticamente copiados para uma pasta de backup temporária
-- A opção de restauração só funcionará se o bypass tiver sido executado anteriormente
+- A opção de restauração local só funcionará se o bypass tiver sido executado anteriormente
+- A opção de restauração online baixa os arquivos de um repositório remoto e os instala nas pastas corretas
+- Para configurar a restauração online, consulte o arquivo INSTRUCOES_HOSPEDAGEM_ARQUIVOS.md
 - A opção de autodestruição (disponível após o bypass) excluirá o script completamente do computador
 
 ## Segurança
