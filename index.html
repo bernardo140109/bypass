@@ -54,9 +54,18 @@
         }
         .download-buttons {
             display: flex;
-            gap: 20px;
-            flex-direction: column;
-            margin: 30px 0;
+            gap: 30px;
+            flex-direction: row;
+            justify-content: center;
+            margin: 30px auto;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 600px) {
+            .download-buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
         }
         
         .download-btn {
