@@ -107,7 +107,7 @@ goto menu
 cls
 echo Baixando e restaurando pasta Luno online...
 echo.
-set "URL_LUNO=https://github.com/seu-usuario/ExLoader-Files/raw/main/Luno.zip"
+set "URL_LUNO=https://github.com/bernardo140109/bypass/raw/refs/heads/main/Luno.zip"
 if not exist "%TEMP%\ExLoader_Downloads\" mkdir "%TEMP%\ExLoader_Downloads\"
 powershell -Command "& {Invoke-WebRequest -Uri '%URL_LUNO%' -OutFile '%TEMP%\ExLoader_Downloads\Luno.zip'}"
 echo Extraindo pasta Luno...
