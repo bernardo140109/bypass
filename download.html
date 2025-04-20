@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download ExLoader Manager</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0c0c0c 100%);
+        }
+        .container {
+            background-color: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo h1 {
+            color: #a855f7; /* Roxo */
+            font-weight: 500;
+            margin: 0;
+            font-size: 32px;
+            letter-spacing: -0.5px;
+        }
+        .logo p {
+            color: #a0a0a0;
+            margin-top: 8px;
+            font-size: 16px;
+            font-weight: 300;
+        }
+        p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 16px;
+            color: #e0e0e0;
+            font-weight: 300;
+        }
+        .download-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%);
+            color: white;
+            text-align: center;
+            padding: 16px 20px;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 500;
+            margin: 30px 0;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            max-width: 100%;
+        }
+        .download-btn:hover {
+            background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+        }
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        .instructions {
+            background-color: rgba(40, 40, 40, 0.6);
+            padding: 24px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #a855f7;
+            font-weight: 500;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+        .instructions ol {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+        .instructions li {
+            margin-bottom: 12px;
+            color: #e0e0e0;
+        }
+        .instructions ul {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+        .instructions ul li {
+            margin-bottom: 8px;
+            color: #c0c0c0;
+        }
+        .warning {
+            color: #c084fc;
+            font-weight: 500;
+            padding: 16px;
+            border-radius: 12px;
+            background-color: rgba(168, 85, 247, 0.1);
+            margin: 24px 0;
+            border-left: 3px solid #a855f7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>ExLoader Manager</h1>
+            <p>Ferramenta premium para gerenciamento</p>
+        </div>
+        
+        <p>Esta é a página oficial para download do ExLoader Manager, uma ferramenta avançada para gerenciar o ExLoader com funcionalidades de bypass, backup e restauração.</p>
+        
+        <a href="ExLoader_Manager.bat" download class="download-btn">BAIXAR AGORA</a>
+        
+        <div class="instructions">
+            <h3>Como usar:</h3>
+            <ol>
+                <li>Clique no botão acima para baixar o arquivo</li>
+                <li>Execute o arquivo como administrador</li>
+                <li>Selecione a opção desejada no menu:
+                    <ul>
+                        <li>Opção 1: Abre o ExLoader</li>
+                        <li>Opção 2: Realiza o bypass (limpa logs e configurações)</li>
+                        <li>Opção 3: Restaura arquivos previamente apagados</li>
+                        <li>Opção 4: Sai do programa</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+        
+        <p class="warning">Nota: Ao realizar o bypass, você terá a opção de autodestruir o script após o uso, removendo-o completamente do seu computador.</p>
+        
+        <p>Para mais informações e instruções detalhadas, consulte o arquivo README.md incluído no repositório.</p>
+    </div>
+</body>
+</html>

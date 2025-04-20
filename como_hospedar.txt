@@ -1,0 +1,37 @@
+COMO HOSPEDAR O EXLOADER MANAGER
+
+Para hospedar o ExLoader Manager e disponibilizá-lo para download, siga estas instruções:
+
+1. PREPARAÇÃO DOS ARQUIVOS
+   - Você tem os seguintes arquivos prontos para hospedagem:
+     * ExLoader_Manager.bat (script principal)
+     * README.md (instruções gerais)
+     * download.html (página web para download)
+     * HOSPEDAGEM.md (instruções detalhadas de hospedagem)
+
+2. OPÇÕES DE HOSPEDAGEM RECOMENDADAS
+
+   A) GITHUB (RECOMENDADO)
+      - Crie um repositório no GitHub (pode ser privado)
+      - Faça upload de todos os arquivos
+      - Ative GitHub Pages para hospedar a página de download
+      - Compartilhe o link do GitHub Pages
+
+   B) GOOGLE DRIVE
+      - Faça upload de todos os arquivos para uma pasta
+      - Gere links de compartilhamento
+      - Compartilhe o link do arquivo .bat diretamente
+
+   C) NETLIFY/VERCEL
+      - Crie uma conta em um desses serviços
+      - Faça upload dos arquivos ou conecte ao repositório GitHub
+      - Use a página download.html como página principal
+      - Compartilhe o link gerado
+
+3. DICAS IMPORTANTES
+   - Sempre compacte os arquivos em um .ZIP para facilitar o download
+   - Alguns navegadores podem bloquear o download de arquivos .bat
+   - Instrua os usuários a executar o arquivo como administrador
+   - Mantenha os links privados e compartilhe apenas com pessoas de confiança
+
+Para instruções mais detalhadas, consulte o arquivo HOSPEDAGEM.md
