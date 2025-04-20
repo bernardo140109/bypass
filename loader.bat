@@ -1,11 +1,15 @@
 @echo off
 chcp 65001 > nul
 
+:: Obter o caminho completo do script atual
+set "SCRIPT_PATH=%~dp0"
+set "SCRIPT_NAME=%~nx0"
+
 :: Verificar privilégios administrativos
 NET FILE 1>NUL 2>NUL
 if '%errorlevel%' == '0' ( goto admin_ok ) else (
     echo Elevando privilégios...
-    PowerShell -Command "Start-Process -FilePath '%~nx0' -Verb RunAs"
+    PowerShell -Command "Start-Process -FilePath '%~f0' -Verb RunAs"
     exit /b
 )
 :admin_ok
@@ -44,16 +48,20 @@ cls
 echo Abrindo ExLoader (D:\exloader)...
 echo.
 
-if exist "D:\exloader\ExLoader.exe" (
-    Start-Process "D:\exloader\ExLoader.exe" -Verb RunAs
-if %errorlevel% neq 0 (
-    echo ERRO: Falha ao executar como administrador (Código: %errorlevel%)
-    pause
-)
-if errorlevel 1 (
-    echo Erro: Execute como Administrador (direito clique > Executar como administrador)
-    pause
-)
+:: Definir caminho do ExLoader
+set "EXLOADER_PATH=D:\exloader"
+
+if exist "%EXLOADER_PATH%\ExLoader.exe" (
+    echo Tentando executar ExLoader como administrador...
+    PowerShell -Command "Start-Process -FilePath '%EXLOADER_PATH%\ExLoader.exe' -Verb RunAs"
+    if %errorlevel% neq 0 (
+        echo ERRO: Falha ao executar como administrador (Código: %errorlevel%)
+        pause
+    )
+    if errorlevel 1 (
+        echo Erro: Execute como Administrador (direito clique > Executar como administrador)
+        pause
+    )
     if errorlevel 1 (
         echo Falha ao iniciar o ExLoader. Código do erro: %ERRORLEVEL%
         pause
@@ -95,7 +103,7 @@ timeout /t 10 > nul
 )
 
 echo Apagando logs do ExLoader...
-del /f /q "D:\exloader\*.log" 2>nul
+del /f /q "%EXLOADER_PATH%\*.log" 2>nul
 if errorlevel 1 (
     echo Erro: Falha ao apagar logs do ExLoader
     pause
@@ -106,8 +114,9 @@ timeout /t 10 > nul
 )
 
 echo Apagando logs da pasta ExHack...
-del /f /q "C:\Users\berna\AppData\Roaming\ExHack\*.log" 2>nul
-rmdir /s /q "C:\Users\berna\AppData\Roaming\ExHack" 2>nul
+set "EXHACK_PATH=%APPDATA%\ExHack"
+del /f /q "%EXHACK_PATH%\*.log" 2>nul
+rmdir /s /q "%EXHACK_PATH%" 2>nul
 echo.
 echo Bypass concluído com sucesso!
 echo.
