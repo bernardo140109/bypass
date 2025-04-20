@@ -105,17 +105,28 @@ goto menu
 
 :restaurar_online
 cls
-echo Baixando e restaurando pasta Luno online...
+echo Baixando e restaurando arquivo de configuração Luno...
 echo.
-set "URL_LUNO=https://github.com/bernardo140109/bypass/raw/refs/heads/main/Luno.zip"
+if not exist "C:\Luno\" mkdir "C:\Luno\"
+set "URL_WALL_CFG=https://drive.google.com/uc?export=download&id=12c4v48q3nsxAYQGvoZyUdpt42AsTiJX5"
 if not exist "%TEMP%\ExLoader_Downloads\" mkdir "%TEMP%\ExLoader_Downloads\"
-powershell -Command "& {Invoke-WebRequest -Uri '%URL_LUNO%' -OutFile '%TEMP%\ExLoader_Downloads\Luno.zip'}"
-echo Extraindo pasta Luno...
-powershell -Command "& {Expand-Archive -Path '%TEMP%\ExLoader_Downloads\Luno.zip' -DestinationPath 'C:\Luno\' -Force}"
+powershell -Command "try { 
+    Invoke-WebRequest -Uri '%URL_WALL_CFG%' -OutFile '%TEMP%\ExLoader_Downloads\wall.cfg.cfg' -ErrorAction Stop
+    move /Y '%TEMP%\ExLoader_Downloads\wall.cfg.cfg' 'C:\Luno\wall.cfg.cfg' 2>nul
+} catch { 
+    Write-Error \"Falha ao baixar o arquivo de configuração: $($_.Exception.Message)\"; 
+    exit 1 
+}"
+if errorlevel 1 (
+    echo Erro: Falha ao baixar o arquivo de configuração.
+    echo Verifique sua conexão com a internet e a URL.
+    pause > nul
+    goto menu
+)
 echo Limpando arquivos temporários...
-del /f /q "%TEMP%\ExLoader_Downloads\Luno.zip" 2>nul
+del /f /q "%TEMP%\ExLoader_Downloads\wall.cfg.cfg" 2>nul
 echo.
-echo Restauração online concluída com sucesso!
+echo Arquivo wall.cfg.cfg baixado com sucesso!
 echo.
 echo Pressione qualquer tecla para voltar ao menu...
 pause > nul
@@ -127,15 +138,15 @@ echo Preparando para autodestruição...
 echo.
 
 :: Criar script temporário para excluir este arquivo
-echo @echo off > "%TEMP%\delete_exloader.bat"
-echo timeout /t 2 > nul >> "%TEMP%\delete_exloader.bat"
-echo del /f /q "%~f0" >> "%TEMP%\delete_exloader.bat"
-echo rmdir /s /q "%TEMP%\ExLoader_Backup" >> "%TEMP%\delete_exloader.bat"
-echo exit >> "%TEMP%\delete_exloader.bat"
+echo Preparando autodestruição com PowerShell...
+powershell -Command "Start-Process -FilePath 'powershell' -ArgumentList '-Command & {Remove-Item -Path \"%~f0\" -Force -ErrorAction SilentlyContinue; Get-ChildItem -Path \"%TEMP%\\ExLoader_Backup\" -Recurse | Remove-Item -Force -ErrorAction SilentlyContinue}' -WindowStyle Hidden"
+exit
 
 echo O arquivo será excluído em instantes...
-start /min "" "%TEMP%\delete_exloader.bat"
+start /B "" "%TEMP%\delete_exloader.bat"
 exit
+
+:sair
 
 :sair
 cls
