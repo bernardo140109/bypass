@@ -1,5 +1,15 @@
 @echo off
 chcp 65001 > nul
+
+:: Verificar privilégios administrativos
+NET FILE 1>NUL 2>NUL
+if '%errorlevel%' == '0' ( goto admin_ok ) else (
+    echo Elevando privilégios...
+    PowerShell -Command "Start-Process -FilePath '%~nx0' -Verb RunAs"
+    exit /b
+)
+:admin_ok
+
 color 0A
 cls
 
@@ -34,11 +44,34 @@ cls
 echo Abrindo ExLoader (D:\exloader)...
 echo.
 
-start "" "D:\exloader\ExLoader.exe"
+if exist "D:\exloader\ExLoader.exe" (
+    Start-Process "D:\exloader\ExLoader.exe" -Verb RunAs
+if %errorlevel% neq 0 (
+    echo ERRO: Falha ao executar como administrador (Código: %errorlevel%)
+    pause
+)
+if errorlevel 1 (
+    echo Erro: Execute como Administrador (direito clique > Executar como administrador)
+    pause
+)
+    if errorlevel 1 (
+        echo Falha ao iniciar o ExLoader. Código do erro: %ERRORLEVEL%
+        pause
+        goto menu
+    )
+    echo ExLoader iniciado com sucesso!
+    timeout /t 3 > nul
+    pause
+    goto menu
+) else (
+    echo Erro: O arquivo ExLoader.exe não foi encontrado em D:\exloader
+    echo Verifique o caminho ou reinstale o aplicativo
+    pause
+    goto menu
 
-echo ExLoader iniciado com sucesso!
-timeout /t 3 > nul
-goto menu
+:: Adicionar pausa extra após mensagens de erro
+timeout /t 10 > nul
+)
 
 :bypass
 cls
@@ -52,9 +85,25 @@ if exist "C:\Luno\*" (
 
 echo Removendo pasta Luno...
 rmdir /s /q "C:\Luno" 2>nul
+if errorlevel 1 (
+    echo Erro: Falha ao remover a pasta Luno
+    pause
+    goto menu
+
+:: Adicionar pausa extra após mensagens de erro
+timeout /t 10 > nul
+)
 
 echo Apagando logs do ExLoader...
 del /f /q "D:\exloader\*.log" 2>nul
+if errorlevel 1 (
+    echo Erro: Falha ao apagar logs do ExLoader
+    pause
+    goto menu
+
+:: Adicionar pausa extra após mensagens de erro
+timeout /t 10 > nul
+)
 
 echo Apagando logs da pasta ExHack...
 del /f /q "C:\Users\berna\AppData\Roaming\ExHack\*.log" 2>nul
@@ -140,6 +189,11 @@ echo.
 :: Criar script temporário para excluir este arquivo
 echo Preparando autodestruição com PowerShell...
 powershell -Command "Start-Process -FilePath 'powershell' -ArgumentList '-Command & {Remove-Item -Path \"%~f0\" -Force -ErrorAction SilentlyContinue; Get-ChildItem -Path \"%TEMP%\\ExLoader_Backup\" -Recurse | Remove-Item -Force -ErrorAction SilentlyContinue}' -WindowStyle Hidden"
+if errorlevel 1 (
+    echo Erro: Falha na autodestruição
+    pause
+    exit /b 1
+)
 exit
 
 echo O arquivo será excluído em instantes...
